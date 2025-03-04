@@ -42,6 +42,8 @@ pub enum PushType {
     Voip,
     /// The push type to signal changes to a File Provider extension.
     FileProvider,
+    /// push type for notifications that contain update information for a watchOS app’s complications
+    Complication,
     /// The push type for notifications that tell managed devices to contact the
     /// MDM server.
     Mdm,
@@ -60,6 +62,7 @@ impl fmt::Display for PushType {
             PushType::Location => "location",
             PushType::Voip => "voip",
             PushType::FileProvider => "fileprovider",
+            PushType::Complication => "complication",
             PushType::Mdm => "mdm",
             PushType::LiveActivity => "liveactivity",
             PushType::PushToTalk => "pushtotalk",
