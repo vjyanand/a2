@@ -519,7 +519,7 @@ impl<'a> DefaultNotificationBuilder<'a> {
 }
 
 impl<'a> NotificationBuilder<'a> for DefaultNotificationBuilder<'a> {
-    fn build(self, device_token: &'a str, options: NotificationOptions<'a>) -> Payload<'a> {
+    fn build(self, device_token: impl Into<String>, options: NotificationOptions<'a>) -> Payload<'a> {
         Payload {
             aps: APS {
                 alert: match self.has_edited_alert {
@@ -537,7 +537,7 @@ impl<'a> NotificationBuilder<'a> for DefaultNotificationBuilder<'a> {
                 mutable_content: Some(self.mutable_content),
                 url_args: None,
             },
-            device_token,
+            device_token:device_token.into(),
             options,
             data: BTreeMap::new(),
         }

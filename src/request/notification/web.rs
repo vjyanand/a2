@@ -77,7 +77,7 @@ impl<'a> WebNotificationBuilder<'a> {
 }
 
 impl<'a> NotificationBuilder<'a> for WebNotificationBuilder<'a> {
-    fn build(self, device_token: &'a str, options: NotificationOptions<'a>) -> Payload<'a> {
+    fn build(self, device_token: impl Into<String>, options: NotificationOptions<'a>) -> Payload<'a> {
         Payload {
             aps: APS {
                 alert: Some(APSAlert::WebPush(self.alert)),
@@ -88,7 +88,7 @@ impl<'a> NotificationBuilder<'a> for WebNotificationBuilder<'a> {
                 mutable_content: None,
                 url_args: Some(self.url_args),
             },
-            device_token,
+            device_token:device_token.into(),
             options,
             data: BTreeMap::new(),
         }

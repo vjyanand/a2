@@ -14,7 +14,7 @@ pub struct Payload<'a> {
     pub options: NotificationOptions<'a>,
     /// The token for the receiving device
     #[serde(skip)]
-    pub device_token: &'a str,
+    pub device_token: String,
     /// The pre-defined notification payload
     pub aps: APS<'a>,
     /// Application specific payload
@@ -78,15 +78,15 @@ pub trait PayloadLike: serde::Serialize + Debug {
     }
 
     /// Returns token for the device
-    fn get_device_token(&self) -> &str;
+    fn get_device_token(&self) -> &String;
 
     /// Gets [`NotificationOptions`] for this Payload.
     fn get_options(&self) -> &NotificationOptions;
 }
 
 impl<'a> PayloadLike for Payload<'a> {
-    fn get_device_token(&self) -> &'a str {
-        self.device_token
+    fn get_device_token(&self) -> &String {
+        &self.device_token
     }
 
     fn get_options(&self) -> &NotificationOptions {
