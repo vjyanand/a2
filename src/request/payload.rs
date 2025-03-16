@@ -171,7 +171,7 @@ pub struct APS<'a> {
 
     /// The name of the sound file to play when user receives the notification.
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub sound: Option<APSSound<'a>>,
+    pub sound: Option<APSSound>,
 
     /// Set to one for silent notifications.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -206,9 +206,9 @@ pub enum APSAlert<'a> {
 /// Different notification sound types.
 #[derive(Serialize, Debug, Clone)]
 #[serde(untagged)]
-pub enum APSSound<'a> {
+pub enum APSSound {
     /// A critical notification (supported only on >= iOS 12)
-    Critical(DefaultSound<'a>),
+    Critical(DefaultSound),
     /// Name for a notification sound
-    Sound(&'a str),
+    Sound(String),
 }

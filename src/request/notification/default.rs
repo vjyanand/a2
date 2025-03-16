@@ -38,12 +38,12 @@ mod bool_as_u8 {
 
 #[derive(Deserialize, Serialize, Debug, Clone)]
 #[serde(rename_all = "kebab-case")]
-pub struct DefaultSound<'a> {
+pub struct DefaultSound {
     #[serde(skip_serializing_if = "std::ops::Not::not", with = "bool_as_u8")]
     critical: bool,
 
     #[serde(skip_serializing_if = "Option::is_none")]
-    name: Option<&'a str>,
+    name: Option<String>,
 
     #[serde(skip_serializing_if = "Option::is_none")]
     volume: Option<f64>,
@@ -112,7 +112,7 @@ pub struct DefaultAlert<'a> {
 pub struct DefaultNotificationBuilder<'a> {
     alert: DefaultAlert<'a>,
     badge: Option<u32>,
-    sound: DefaultSound<'a>,
+    sound: DefaultSound,
     category: Option<&'a str>,
     mutable_content: u8,
     content_available: Option<u8>,
@@ -297,8 +297,8 @@ impl<'a> DefaultNotificationBuilder<'a> {
     /// );
     /// # }
     /// ```
-    pub fn set_sound(mut self, sound: &'a str) -> Self {
-        self.sound.name = Some(sound);
+    pub fn set_sound(mut self, sound: impl Into<String>) -> Self {
+        self.sound.name = Some(sound.into());
         self
     }
 

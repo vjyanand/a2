@@ -26,7 +26,7 @@ pub struct WebPushAlert<'a> {
 /// ```
 pub struct WebNotificationBuilder<'a> {
     alert: WebPushAlert<'a>,
-    sound: Option<&'a str>,
+    sound: Option<String>,
     url_args: &'a [&'a str],
 }
 
@@ -70,8 +70,8 @@ impl<'a> WebNotificationBuilder<'a> {
     /// );
     /// # }
     /// ```
-    pub fn set_sound(&mut self, sound: &'a str) -> &mut Self {
-        self.sound = Some(sound);
+    pub fn set_sound(&mut self, sound: impl Into<String>) -> &mut Self {
+        self.sound = Some(sound.into());
         self
     }
 }
