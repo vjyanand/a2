@@ -297,7 +297,7 @@ impl<'a> DefaultNotificationBuilder<'a> {
     /// );
     /// # }
     /// ```
-    pub fn set_sound(&mut self, sound: Option<impl Into<String>>) -> &mut Self {
+    pub fn set_sound(mut self, sound: Option<impl Into<String>>) -> Self {
         self.sound.name = sound.map(|s| s.into());
         self
     }
