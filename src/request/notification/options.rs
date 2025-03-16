@@ -76,7 +76,7 @@ pub struct NotificationOptions<'a> {
     /// A canonical UUID that identifies the notification. If there is an error
     /// sending the notification, APNs uses this value to identify the
     /// notification to your server.
-    pub apns_id: Option<&'a str>,
+    pub apns_id: Option<String>,
 
     /// The apns-push-type header field has the following valid values.
     ///
