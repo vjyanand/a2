@@ -297,8 +297,8 @@ impl<'a> DefaultNotificationBuilder<'a> {
     /// );
     /// # }
     /// ```
-    pub fn set_sound(mut self, sound: impl Into<String>) -> Self {
-        self.sound.name = Some(sound.into());
+    pub fn set_sound(&mut self, sound: Option<impl Into<String>>) -> &mut Self {
+        self.sound.name = sound.map(|s| s.into());
         self
     }
 
@@ -582,7 +582,7 @@ mod tests {
             .set_body("the body")
             .set_badge(420)
             .set_category("cat1")
-            .set_sound("prööt")
+            .set_sound(Some("prööt"))
             .set_critical(true, Some(1.0))
             .set_mutable_content()
             .set_action_loc_key("PLAY")
