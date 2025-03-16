@@ -70,8 +70,8 @@ impl<'a> WebNotificationBuilder<'a> {
     /// );
     /// # }
     /// ```
-    pub fn set_sound(&mut self, sound: impl Into<String>) -> &mut Self {
-        self.sound = Some(sound.into());
+    pub fn set_sound(&mut self, sound: Option<impl Into<String>>) -> &mut Self {
+        self.sound = sound.map(|s| s.into());
         self
     }
 }
