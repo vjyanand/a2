@@ -53,13 +53,13 @@ pub struct DefaultSound {
 #[serde(rename_all = "kebab-case")]
 pub struct DefaultAlert<'a> {
     #[serde(skip_serializing_if = "Option::is_none")]
-    title: Option<&'a str>,
+    title: Option<String>,
 
     #[serde(skip_serializing_if = "Option::is_none")]
-    subtitle: Option<&'a str>,
+    subtitle: Option<String>,
 
     #[serde(skip_serializing_if = "Option::is_none")]
-    body: Option<&'a str>,
+    body: Option<String>,
 
     #[serde(skip_serializing_if = "Option::is_none")]
     title_loc_key: Option<&'a str>,
@@ -181,8 +181,8 @@ impl<'a> DefaultNotificationBuilder<'a> {
     /// );
     /// # }
     /// ```
-    pub fn set_title(mut self, title: &'a str) -> Self {
-        self.alert.title = Some(title);
+    pub fn set_title(mut self, title: Option<impl Into<String>>) -> Self {
+        self.alert.title = title.map(|s| s.into());
         self.has_edited_alert = true;
         self
     }
@@ -232,8 +232,8 @@ impl<'a> DefaultNotificationBuilder<'a> {
     /// );
     /// # }
     /// ```
-    pub fn set_subtitle(mut self, subtitle: &'a str) -> Self {
-        self.alert.subtitle = Some(subtitle);
+    pub fn set_subtitle(mut self, subtitle: Option<impl Into<String>>) -> Self {
+        self.alert.subtitle = subtitle.map(|s| s.into());
         self.has_edited_alert = true;
         self
     }
@@ -254,8 +254,8 @@ impl<'a> DefaultNotificationBuilder<'a> {
     /// );
     /// # }
     /// ```
-    pub fn set_body(mut self, body: &'a str) -> Self {
-        self.alert.body = Some(body);
+    pub fn set_body(mut self, body: Option<impl Into<String>>) -> Self {
+        self.alert.body = body.map(|s| s.into());
         self
     }
 
@@ -544,7 +544,7 @@ impl<'a> NotificationBuilder<'a> for DefaultNotificationBuilder<'a> {
     }
 }
 
-impl<'a> Default for DefaultNotificationBuilder<'a> {
+impl Default for DefaultNotificationBuilder<'_> {
     fn default() -> Self {
         Self::new()
     }

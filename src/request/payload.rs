@@ -84,7 +84,7 @@ pub trait PayloadLike: serde::Serialize + Debug {
     fn get_options(&self) -> &NotificationOptions;
 }
 
-impl<'a> PayloadLike for Payload<'a> {
+impl PayloadLike for Payload<'_> {
     fn get_device_token(&self) -> &String {
         &self.device_token
     }
@@ -200,7 +200,7 @@ pub enum APSAlert<'a> {
     /// Safari web push notification
     WebPush(WebPushAlert<'a>),
     /// A notification with just a body
-    Body(&'a str),
+    Body(String),
 }
 
 /// Different notification sound types.
