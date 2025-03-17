@@ -181,8 +181,8 @@ impl<'a> DefaultNotificationBuilder<'a> {
     /// );
     /// # }
     /// ```
-    pub fn set_title(mut self, title: Option<impl Into<String>>) -> Self {
-        self.alert.title = title.map(|s| s.into());
+    pub fn set_title(mut self, title: impl Into<String>) -> Self {
+        self.alert.title = Some(title.into());
         self.has_edited_alert = true;
         self
     }
