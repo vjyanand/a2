@@ -2,19 +2,20 @@ use crate::error::Error;
 use std::fmt;
 
 #[derive(Debug, Clone)]
-pub struct CollapseId<'a> {
-    pub value: &'a str,
+pub struct CollapseId {
+    pub value: String,
 }
 
 /// A collapse-id container. Will not allow bigger id's than 64 bytes.
-impl<'a> CollapseId<'a> {
-    pub fn new(value: &'a str) -> Result<CollapseId<'a>, Error> {
-        if value.len() > 64 {
+impl CollapseId {
+    pub fn new(value: impl Into<String>) -> Result<CollapseId, Error> {
+        let value_str = value.into();
+        if value_str.as_bytes().len() > 64 {
             Err(Error::InvalidOptions(String::from(
                 "The collapse-id is too big. Maximum 64 bytes.",
             )))
         } else {
-            Ok(CollapseId { value })
+            Ok(CollapseId { value: value_str })
         }
     }
 }
@@ -116,7 +117,7 @@ pub struct NotificationOptions<'a> {
     /// Multiple notifications with the same collapse identifier are displayed to the
     /// user as a single notification. The value of this key must not exceed 64
     /// bytes.
-    pub apns_collapse_id: Option<CollapseId<'a>>,
+    pub apns_collapse_id: Option<CollapseId>,
 }
 
 /// The importance how fast to bring the notification for the user..
